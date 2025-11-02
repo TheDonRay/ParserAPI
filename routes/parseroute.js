@@ -15,14 +15,23 @@ const upload = multer({
 parserRoute.post('/parsefile', upload.single('UserFile'), async (req, res) => { 
     // set up the file object as such where in this case it will be userResume 
     const UserFile = req.file;  // create it as a req object here for data to be read.
-
+    // create an object to getusers keyword as such 
+    const client_keyword_Search = req.body; 
     // handle error where if there is no file return a json error as such 
     try { 
         if (!UserFile) { 
             return res.status(400).json({ 
                 error: 'No File was Uploaded'
             }); 
-        }   
+        }    
+
+        // do the same for client keyword here as such 
+        if (!client_keyword_Search){ 
+            return res.status(404).json({ 
+                error: "No keyword given Please Enter a keyword"
+            }); 
+        } 
+        
         
         const filePath = path.resolve(UserFile.path); //.this line basically make sure the backend knows the correct local location of the uploaded file — no matter where the app runs from
 
